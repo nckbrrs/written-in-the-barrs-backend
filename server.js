@@ -5,5 +5,5 @@ const cors = require('cors');
 let app = new express();
 app.use(express.json());
 app.use('/invitees', inviteeRouter);
-app.use(cors({ origin: '*' }));
+app.use(cors());
 app.listen(process.env.PORT || 5000);
