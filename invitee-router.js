@@ -2,6 +2,7 @@ import { Router } from 'express';
 import inviteeRepository from './invitee-repository.js';
 const inviteeRouter = Router();
 
+/*
 // allow CORS for preflight requests to this route
 inviteeRouter.options('/', function (req, res) {
     res.setHeader("Access-Control-Allow-Origin", "*");
@@ -9,6 +10,7 @@ inviteeRouter.options('/', function (req, res) {
     res.setHeader("Access-Control-Allow-Headers", "*");
     res.end();
 });
+*/
 
 // create
 inviteeRouter.post('/', async (req, res) => {
@@ -34,6 +36,7 @@ inviteeRouter.get('/', async (req, res) => {
     res.json(firstAndLastMatches.length > 0 ? firstAndLastMatches : justLastMatches);
 });
 
+/*
 // allow CORS for preflight requests to this route
 inviteeRouter.options('/createIndex', function (req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -41,6 +44,7 @@ inviteeRouter.options('/createIndex', function (req, res) {
   res.setHeader("Access-Control-Allow-Headers", "*");
   res.end();
 });
+*/
 
 // create index
 inviteeRouter.get('/createIndex', async (req, res) => {
