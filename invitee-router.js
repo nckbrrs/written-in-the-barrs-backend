@@ -14,6 +14,7 @@ inviteeRouter.options('/', function (req, res) {
 inviteeRouter.post('/', async (req, res) => {
     const invitee = inviteeRepository.createEntity(req.body);
     const id = await inviteeRepository.save(invitee);
+    res.setHeader("Access-Control-Allow-Origin", "*");
     res.json({ entityId: id });
 });
 
@@ -31,6 +32,7 @@ inviteeRouter.get('/', async (req, res) => {
         .where('lastName').equals(lastName)
         .return.all();
 
+    res.setHeader("Access-Control-Allow-Origin", "*");
     res.json(firstAndLastMatches.length > 0 ? firstAndLastMatches : justLastMatches);
 });
 
@@ -44,6 +46,8 @@ inviteeRouter.options('/createIndex', function (req, res) {
 
 // create index
 inviteeRouter.get('/createIndex', async (req, res) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+
     try {
         await inviteeRepository.createIndex();
         res.json({ result: 'created new invitee index!' });
