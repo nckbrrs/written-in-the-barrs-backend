@@ -36,6 +36,15 @@ inviteeRouter.get('/', async (req, res) => {
     }
 });
 
+inviteeRouter.get('/all', async (req, res) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+
+    const allInvitees = await inviteeRepository.search()
+        .return.all();
+
+    res.json(allInvitees);
+})
+
 inviteeRouter.get('/createIndex', async (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
 
@@ -47,7 +56,6 @@ inviteeRouter.get('/createIndex', async (req, res) => {
     }
 });
 
-
 inviteeRouter.options('/', function (req, res) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', '*');
@@ -56,6 +64,13 @@ inviteeRouter.options('/', function (req, res) {
 });
 
 inviteeRouter.options('/createIndex', function (req, res) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', '*');
+    res.setHeader('Access-Control-Allow-Headers', '*');
+    res.end();
+});
+
+inviteeRouter.options('/all', function (req, res) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', '*');
     res.setHeader('Access-Control-Allow-Headers', '*');
