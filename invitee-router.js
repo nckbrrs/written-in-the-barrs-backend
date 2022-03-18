@@ -14,6 +14,19 @@ inviteeRouter.post('/', async (req, res) => {
     }
 });
 
+inviteeRouter.put('/', async (req, res) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+
+    try {
+        const oldInvitee = inviteeRepository.remove(req.body.entityId);
+        const newInvitee = inviteeRepository.createEntity(req.body);
+        const id = await inviteeRepository.save(newInvitee);
+        res.json({ entityId: id });
+    } catch (err) {
+        res.json({ result: 'ERROR! ' + err.message});
+    }
+});
+
 inviteeRouter.get('/', async (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
 
