@@ -14,6 +14,7 @@ inviteeRouter.post('/', async (req, res) => {
     }
 });
 
+/*
 inviteeRouter.put('/', async (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
 
@@ -21,6 +22,25 @@ inviteeRouter.put('/', async (req, res) => {
         const oldInvitee = inviteeRepository.remove(req.body.entityId);
         const newInvitee = inviteeRepository.createEntity(req.body);
         const id = await inviteeRepository.save(newInvitee);
+        res.json({ entityId: id });
+    } catch (err) {
+        res.json({ result: 'ERROR! ' + err.message});
+    }
+});
+*/
+
+inviteeRouter.patch('/', async (req, res) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+
+    try {
+        const invitee = await inviteeRepository.fetch(req.body.entityId);
+        invitee.isAttendingWedding = req.body.isAttendingWedding;
+        invitee.isAttendingRehearsalDinner = req.body.isAttendingRehearsalDinner;
+        invitee.isBringingPlusOneToWedding = req.body.isBringingPlusOneToWedding;
+        invitee.isBringingPlusOneToRehearsalDinner = req.body.isBringingPlusOneToRehearsalDinner;
+        invitee.dietaryRestrictions = req.body.dietaryRestrictions;
+        invitee.hasRsvpd = req.body.hasRsvpd;
+        const id = await inviteeRepository.save(invitee);
         res.json({ entityId: id });
     } catch (err) {
         res.json({ result: 'ERROR! ' + err.message});
