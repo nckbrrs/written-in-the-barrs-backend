@@ -14,20 +14,6 @@ inviteeRouter.post('/', async (req, res) => {
     }
 });
 
-/*
-inviteeRouter.put('/', async (req, res) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-
-    try {
-        const oldInvitee = inviteeRepository.remove(req.body.entityId);
-        const newInvitee = inviteeRepository.createEntity(req.body);
-        const id = await inviteeRepository.save(newInvitee);
-        res.json({ entityId: id });
-    } catch (err) {
-        res.json({ result: 'ERROR! ' + err.message});
-    }
-});
-*/
 
 inviteeRouter.patch('/', async (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -63,7 +49,19 @@ inviteeRouter.get('/', async (req, res) => {
             .where('lastName').equals(lastName)
             .return.all();
 
-        res.json(firstAndLastMatches.length > 0 ? firstAndLastMatches : justLastMatches);
+        const plusOneFirstAndLastMatches = await inviteeRepository.search()
+            .where('plusOneFirstName').equals(firstName)
+            .and('plusOneLastName').equals(lastName)
+            .return.all();
+
+        const plusOneJustLastMatches = await inviteeRepository.search()
+            .where('plusOneLastName').equals(lastName)
+            .return.all();
+
+        res.json(firstAndLastMatches.length > 0 ? firstAndLastMatches : 
+            plusOneFirstAndLastMatches.length > 0 ? plusOneFirstAndLastMatches :
+            justLastMatches.length > 0 ? justLastMatches : plusOneJustLastMatches);
+
     } catch (err) {
         res.json({ result: 'ERROR! ' + err.message});
     }

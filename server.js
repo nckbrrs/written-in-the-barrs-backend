@@ -6,4 +6,4 @@ let app = new express();
 app.use(express.json());
 app.use('/invitees', inviteeRouter);
 app.use(cors({ origin: '*' }));
-app.listen(process.env.PORT || 5000);
+app.listen(process.env.PORT || 5001);
