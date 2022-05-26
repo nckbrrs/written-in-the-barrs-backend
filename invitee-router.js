@@ -76,6 +76,16 @@ inviteeRouter.get('/all', async (req, res) => {
     res.json(allInvitees);
 })
 
+inviteeRouter.get('/rsvps', async (req, res) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+
+    const hasRsvpd = await inviteeRepository.search()
+        .where('hasRsvpd').equals(true)
+        .return.all();
+
+    res.json({count: hasRsvpd.length, data: hasRsvpd});
+})
+
 inviteeRouter.get('/createIndex', async (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
 
@@ -102,6 +112,13 @@ inviteeRouter.options('/createIndex', function (req, res) {
 });
 
 inviteeRouter.options('/all', function (req, res) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', '*');
+    res.setHeader('Access-Control-Allow-Headers', '*');
+    res.end();
+});
+
+inviteeRouter.options('/rsvps', function (req, res) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', '*');
     res.setHeader('Access-Control-Allow-Headers', '*');
